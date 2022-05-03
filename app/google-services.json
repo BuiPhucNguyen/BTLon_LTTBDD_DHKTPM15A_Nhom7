@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "784751069543",
+    "firebase_url": "https://btl-nhom7-lttbdd-default-rtdb.firebaseio.com",
+    "project_id": "btl-nhom7-lttbdd",
+    "storage_bucket": "btl-nhom7-lttbdd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784751069543:android:eb8ccae21e413a5e1f87c2",
+        "android_client_info": {
+          "package_name": "com.example.btl_nhom7_lttbdd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "784751069543-c1gk3truop51klffsoeupe8vj4opd4mo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmakBd5fwDyl5vQegAcEmNy6yDLLGVYao"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "784751069543-c1gk3truop51klffsoeupe8vj4opd4mo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
