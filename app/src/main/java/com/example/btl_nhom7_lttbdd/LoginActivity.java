@@ -111,9 +111,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-<<<<<<< HEAD
-}
-=======
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -126,4 +124,3 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.removeAuthStateListener(authStateListener);
     }
 }
->>>>>>> 0790fbbbdaec356b687fc12e1be1ea88b1fc6d22
