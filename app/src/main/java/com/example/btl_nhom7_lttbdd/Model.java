@@ -13,6 +13,7 @@ public class Model {
         this.id = id;
         this.date = date;
     }
+
     public String getTask() {
         return task;
     }

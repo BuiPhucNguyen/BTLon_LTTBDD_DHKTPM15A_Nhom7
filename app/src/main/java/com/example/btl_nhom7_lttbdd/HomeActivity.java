@@ -115,6 +115,7 @@ public class HomeActivity extends AppCompatActivity {
                 String id = reference.push().getKey();
                 String date = DateFormat.getDateInstance().format(new Date());
 
+
                 if (TextUtils.isEmpty(mTask)) {
                     task.setError("Task Required");
                     return;
