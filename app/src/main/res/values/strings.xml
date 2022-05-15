@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">BTL_Nhom7_LTTBDD</string>
+
+    <string name="nav_home">Home</string>
+    <string name="nav_acc">Account</string>
+    <string name="nav_profile">My profile</string>
+    <string name="nav_change">Change password</string>
+    <string name="nav_drawer_open">Open</string>
+    <string name="nav_drawer_close">CLose</string>
+    <string name="log_out">Log_out</string>
 </resources>

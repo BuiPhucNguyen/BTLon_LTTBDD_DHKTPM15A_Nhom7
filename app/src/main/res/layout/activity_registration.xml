@@ -63,7 +63,7 @@
         android:layout_margin="10dp"
         android:textColor="#000"
         android:textSize="20sp"
-        android:background="#fff"/>
+        android:background="@drawable/btn_background_design"/>
 
     <TextView
         android:id="@+id/RegistrationPageQuestion"

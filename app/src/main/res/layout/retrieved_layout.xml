@@ -27,7 +27,7 @@
                 android:textColor="#fff"
                 android:text="June 18, 2020"
                 android:gravity="center"
-                android:background="@drawable/background_design"
+                android:background="@drawable/btn_background_design"
                 android:padding="10dp"
                 android:textSize="18sp"
                 android:textStyle="bold"/>
