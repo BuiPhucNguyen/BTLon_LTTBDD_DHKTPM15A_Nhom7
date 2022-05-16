@@ -39,6 +39,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -73,6 +74,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private String key = "";
     private String task;
     private String description;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,7 +125,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         tvName = mNavigationView.getHeaderView(0).findViewById(R.id.tv_ten);
         tvEmail = mNavigationView.getHeaderView(0).findViewById(R.id.tv_mail);
     }
-    private void showInfor(){
+    public void showInfor(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user == null){
             return;
@@ -290,6 +292,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         edtFullname.setText(user.getDisplayName());
         edtEmail.setText(user.getEmail());
+        Glide.with(getApplicationContext()).load(user.getPhotoUrl()).error(R.drawable.ic_launcher_round).into(imgAvatar);
         imageAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -301,13 +304,32 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if(user == null){
+                    return;
+                }
                 loader.setMessage("Adding your data");
                 loader.setCanceledOnTouchOutside(false);
                 loader.show();
+                String strFullname = edtFullname.getText().toString().trim();
+                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                        .setDisplayName(strFullname)
+                        .setPhotoUri(imageURI)
+                        .build();
+                user.updateProfile(profileUpdates)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    Toast.makeText(HomeActivity.this, "Data has been updated successfully", Toast.LENGTH_SHORT).show();
+                                    showInfor();
+                                    loader.dismiss();
+                                }
+                            }
+                        });
                 dialog.dismiss();
             }
         });
-
         dialog.show();
     }
 
@@ -453,9 +475,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == 100 && resultCode == RESULT_OK && data != null){
+        if(requestCode == 100 && data.getData() != null && data != null){
             imageURI = data.getData();
-            ImageView imageAvatar = (ImageView)findViewById(R.id.img_avatar_update);
+            LayoutInflater inflater = LayoutInflater.from(this);
+            View myView = inflater.inflate(R.layout.my_profile, null);
+            ImageView imageAvatar = (ImageView)myView.findViewById(R.id.img_avatar_update);
             imageAvatar.setImageURI(imageURI);
         }
     }
