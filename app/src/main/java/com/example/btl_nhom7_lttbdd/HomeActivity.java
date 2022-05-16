@@ -153,7 +153,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         final EditText task = myView.findViewById(R.id.task);
         final EditText description = myView.findViewById(R.id.description);
-        Button save = myView.findViewById(R.id.saveBtn);
+        Button save = myView.findViewById(R.id.btnSave);
         Button cancel = myView.findViewById(R.id.CancelBtn);
 
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -275,7 +275,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         myDialog.setView(myView);
 
         final AlertDialog dialog = myDialog.create();
-        dialog.setCancelable(false);
+        dialog.setCancelable(true);
 
         final EditText edtFullname = myView.findViewById(R.id.edt_fullname);
         final EditText edtEmail = myView.findViewById(R.id.edt_email);
