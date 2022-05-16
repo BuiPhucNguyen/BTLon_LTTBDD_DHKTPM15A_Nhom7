@@ -94,8 +94,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         initUI();
         mNavigationView.setNavigationItemSelectedListener(this);
 
-        mNavigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
-
         recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
@@ -155,7 +153,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         final EditText task = myView.findViewById(R.id.task);
         final EditText description = myView.findViewById(R.id.description);
-        Button save = myView.findViewById(R.id.saveBtn);
+        Button save = myView.findViewById(R.id.btnSave);
         Button cancel = myView.findViewById(R.id.CancelBtn);
 
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -255,14 +253,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         if(id == R.id.nav_home){
             Intent intent = new Intent(this, HomeActivity.class);
-            mNavigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
             startActivity(intent);
         }else if(id == R.id.nav_profile){
             updateProfile();
-            mNavigationView.getMenu().findItem(R.id.nav_profile).setChecked(true);
         }else if(id == R.id.nav_change){
-
-            mNavigationView.getMenu().findItem(R.id.nav_change).setChecked(true);
+            changePass();
         }else if(id == R.id.log_out){
             mAuth.signOut();
             Intent intent  = new Intent(this, LoginActivity.class);
@@ -280,7 +275,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         myDialog.setView(myView);
 
         final AlertDialog dialog = myDialog.create();
-        dialog.setCancelable(false);
+        dialog.setCancelable(true);
 
         final EditText edtFullname = myView.findViewById(R.id.edt_fullname);
         final EditText edtEmail = myView.findViewById(R.id.edt_email);
@@ -308,7 +303,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 if(user == null){
                     return;
                 }
-                loader.setMessage("Adding your data");
+                loader.setMessage("Updating your data");
                 loader.setCanceledOnTouchOutside(false);
                 loader.show();
                 String strFullname = edtFullname.getText().toString().trim();
@@ -330,6 +325,66 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 dialog.dismiss();
             }
         });
+        dialog.show();
+    }
+    private void changePass() {
+        AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+
+        View myView = inflater.inflate(R.layout.changepassword, null);
+        myDialog.setView(myView);
+
+        final AlertDialog dialog = myDialog.create();
+        dialog.setCancelable(true);
+
+        final EditText task = myView.findViewById(R.id.newpasss);
+
+        Button change = myView.findViewById(R.id.btnChange);
+        Button cancel = myView.findViewById(R.id.btnExit);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String mTask = task.getText().toString().trim();
+
+                if (TextUtils.isEmpty(mTask)) {
+                    task.setError("New password Required!");
+                    return;
+                } else {
+                    loader.setMessage("Change your password!");
+                    loader.setCanceledOnTouchOutside(false);
+                    loader.show();
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    user.updatePassword(mTask).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+                                Toast.makeText(HomeActivity.this, "Change passwword Successfully!", Toast.LENGTH_SHORT).show();
+                                loader.dismiss();
+                                mAuth.signOut();
+                                Intent intent  = new Intent(HomeActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                            }
+                            else{
+                                Toast.makeText(HomeActivity.this, "Change passwword Unsuccessfully!", Toast.LENGTH_SHORT).show();
+                                loader.dismiss();
+                            }
+                        }
+                    });
+
+                }
+
+                dialog.dismiss();
+            }
+        });
+
         dialog.show();
     }
 

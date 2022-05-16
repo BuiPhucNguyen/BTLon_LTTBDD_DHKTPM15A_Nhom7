@@ -9,24 +9,23 @@
         <entry key="..\:/Mobile_TH/BLT_Nhom7_LTTBDD/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
         <entry key="..\:/Mobile_TH/BLT_Nhom7_LTTBDD/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Mobile_TH/BLT_Nhom7_LTTBDD/app/src/main/res/layout/activity_registration.xml" value="0.25416666666666665" />
+        <entry key="..\:/Mobile_TH/BLT_Nhom7_LTTBDD/app/src/main/res/layout/changepassword.xml" value="0.25416666666666665" />
         <entry key="..\:/Mobile_TH/BLT_Nhom7_LTTBDD/app/src/main/res/layout/input_file.xml" value="0.25416666666666665" />
+        <entry key="..\:/Mobile_TH/BLT_Nhom7_LTTBDD/app/src/main/res/layout/layout_header_nav.xml" value="0.25416666666666665" />
+        <entry key="..\:/Mobile_TH/BLT_Nhom7_LTTBDD/app/src/main/res/layout/my_profile.xml" value="0.25416666666666665" />
         <entry key="..\:/Mobile_TH/BLT_Nhom7_LTTBDD/app/src/main/res/layout/retrieved_layout.xml" value="0.25416666666666665" />
         <entry key="..\:/Mobile_TH/BLT_Nhom7_LTTBDD/app/src/main/res/layout/update_data.xml" value="0.25416666666666665" />
         <entry key="..\:/Mobile_TH/BLT_Nhom7_LTTBDD/app/src/main/res/menu/main_menu.xml" value="0.1" />
-<<<<<<< HEAD
-        <entry key="..\:/Users/AD/Desktop/BTCuoiKi/BTLon_LTTBDD_DHKTPM15A_Nhom7/app/src/main/res/layout/update_data.xml" value="0.22826086956521738" />
-=======
         <entry key="..\:/Users/PLUNDERER/AndroidStudioProjects/BTLon_LTTBDD_DHKTPM15A_Nhom7/app/src/main/res/layout/activity_home.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/PLUNDERER/AndroidStudioProjects/BTLon_LTTBDD_DHKTPM15A_Nhom7/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/PLUNDERER/AndroidStudioProjects/BTLon_LTTBDD_DHKTPM15A_Nhom7/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/PLUNDERER/AndroidStudioProjects/BTLon_LTTBDD_DHKTPM15A_Nhom7/app/src/main/res/layout/input_file.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/PLUNDERER/AndroidStudioProjects/BTLon_LTTBDD_DHKTPM15A_Nhom7/app/src/main/res/layout/retrieved_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/PLUNDERER/AndroidStudioProjects/BTLon_LTTBDD_DHKTPM15A_Nhom7/app/src/main/res/layout/update_data.xml" value="0.36666666666666664" />
->>>>>>> 589f867159982a8fcee543c28b25ac7091fbb0c1
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
