@@ -94,8 +94,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         initUI();
         mNavigationView.setNavigationItemSelectedListener(this);
 
-        mNavigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
-
         recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
@@ -255,14 +253,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         if(id == R.id.nav_home){
             Intent intent = new Intent(this, HomeActivity.class);
-            mNavigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
             startActivity(intent);
         }else if(id == R.id.nav_profile){
             updateProfile();
-            mNavigationView.getMenu().findItem(R.id.nav_profile).setChecked(true);
         }else if(id == R.id.nav_change){
-
-            mNavigationView.getMenu().findItem(R.id.nav_change).setChecked(true);
+            changePass();
         }else if(id == R.id.log_out){
             mAuth.signOut();
             Intent intent  = new Intent(this, LoginActivity.class);
@@ -292,7 +287,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         edtFullname.setText(user.getDisplayName());
         edtEmail.setText(user.getEmail());
-        Glide.with(getApplicationContext()).load(user.getPhotoUrl()).error(R.drawable.ic_launcher_round).into(imgAvatar);
+        Glide.with(this).load(user.getPhotoUrl()).into(imgAvatar);
         imageAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -308,7 +303,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 if(user == null){
                     return;
                 }
-                loader.setMessage("Adding your data");
+                loader.setMessage("Updating your data");
                 loader.setCanceledOnTouchOutside(false);
                 loader.show();
                 String strFullname = edtFullname.getText().toString().trim();
@@ -316,6 +311,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         .setDisplayName(strFullname)
                         .setPhotoUri(imageURI)
                         .build();
+                uploadImage();
                 user.updateProfile(profileUpdates)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -330,6 +326,66 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 dialog.dismiss();
             }
         });
+        dialog.show();
+    }
+    private void changePass() {
+        AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+
+        View myView = inflater.inflate(R.layout.changepassword, null);
+        myDialog.setView(myView);
+
+        final AlertDialog dialog = myDialog.create();
+        dialog.setCancelable(true);
+
+        final EditText task = myView.findViewById(R.id.newpasss);
+
+        Button change = myView.findViewById(R.id.btnChange);
+        Button cancel = myView.findViewById(R.id.btnExit);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String mTask = task.getText().toString().trim();
+
+                if (TextUtils.isEmpty(mTask)) {
+                    task.setError("New password Required!");
+                    return;
+                } else {
+                    loader.setMessage("Change your password!");
+                    loader.setCanceledOnTouchOutside(false);
+                    loader.show();
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    user.updatePassword(mTask).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+                                Toast.makeText(HomeActivity.this, "Change passwword Successfully!", Toast.LENGTH_SHORT).show();
+                                loader.dismiss();
+                                mAuth.signOut();
+                                Intent intent  = new Intent(HomeActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                            }
+                            else{
+                                Toast.makeText(HomeActivity.this, "Change passwword Unsuccessfully!", Toast.LENGTH_SHORT).show();
+                                loader.dismiss();
+                            }
+                        }
+                    });
+
+                }
+
+                dialog.dismiss();
+            }
+        });
+
         dialog.show();
     }
 
@@ -434,10 +490,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         dialog.show();
     }
     private void uploadImage() {
-        loader = new ProgressDialog(this);
-        loader.setTitle("Uploading File...");
-        loader.show();
-
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.ENGLISH);
         Date now = new Date();
         String fileName = simpleDateFormat.format(now);
@@ -446,19 +498,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         storageReference.putFile(imageURI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                ImageView img = findViewById(R.id.img_avatar_update);
-                img.setImageURI(null);
+                LayoutInflater inflater = LayoutInflater.from(HomeActivity.this);
+                View myView = inflater.inflate(R.layout.my_profile, null);
+                ImageView imageAvatar = (ImageView)myView.findViewById(R.id.img_avatar_update);
+                imageAvatar.setImageURI(null);
                 Toast.makeText(HomeActivity.this, "Successfully Upload", Toast.LENGTH_SHORT).show();
-                if(loader.isShowing()){
-                    loader.dismiss();
-                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                if(loader.isShowing()){
-                    loader.dismiss();
-                }
                 Toast.makeText(HomeActivity.this, "Failed to Upload", Toast.LENGTH_SHORT).show();
             }
         });
